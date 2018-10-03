@@ -1,6 +1,0 @@
-github.com/minio/minio-go v6.0.7+incompatible h1:nWABqotkiT/3aLgFnG30doQiwFkDMM9xnGGQnS+Ao6M=
-github.com/minio/minio-go v6.0.7+incompatible/go.mod h1:7guKYtitv8dktvNUGrhzmNlA5wrAABTQXCoesZdFQO8=
-golang.org/x/net v0.0.0-20181003013248-f5e5bdd77824 h1:MkjFNbaZJyH98M67Q3umtwZ+EdVdrNJLqSwZp5vcv60=
-golang.org/x/net v0.0.0-20181003013248-f5e5bdd77824/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
-golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
-golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=

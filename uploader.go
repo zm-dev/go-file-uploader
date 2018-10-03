@@ -20,14 +20,14 @@ type FileHeader struct {
 }
 
 type Uploader interface {
-	Upload(fh FileHeader) (hash string, err error)
+	Upload(fh FileHeader, extra string) (f *FileModel, err error)
 	PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error)
 }
 
-func Upload(ctx context.Context, fh FileHeader) (hash string, err error) {
+func Upload(ctx context.Context, fh FileHeader, extra string) (f *FileModel, err error) {
 	u, ok := FromContext(ctx)
 	if !ok {
-		return "", errors.New("uploader不存在")
+		return nil, errors.New("uploader不存在")
 	}
-	return u.Upload(fh)
+	return u.Upload(fh, extra)
 }
