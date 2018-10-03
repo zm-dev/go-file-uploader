@@ -53,18 +53,18 @@ func (mu *minioUploader) saveToMinio(hashValue string, fh FileHeader) error {
 	return err
 }
 
-func (mu *minioUploader) Upload(fh FileHeader) error {
+func (mu *minioUploader) Upload(fh FileHeader) (hash string, err error) {
 
 	hashValue, err := mu.h.Hash(fh.File)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if err := mu.saveToMinio(hashValue, fh); err != nil {
-		return err
+		return hashValue, err
 	}
 
-	return nil
+	return hashValue, nil
 }
 
 func (mu *minioUploader) PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error) {
