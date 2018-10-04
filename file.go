@@ -11,3 +11,7 @@ type FileModel struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+func (FileModel) TableName() string {
+	return "files"
+}
