@@ -22,6 +22,7 @@ type FileHeader struct {
 type Uploader interface {
 	Upload(fh FileHeader, extra string) (f *FileModel, err error)
 	PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error)
+	Store() Store
 }
 
 func Upload(ctx context.Context, fh FileHeader, extra string) (f *FileModel, err error) {

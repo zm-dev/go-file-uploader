@@ -8,19 +8,26 @@ type dbStore struct {
 	db *gorm.DB
 }
 
-func (is *dbStore) FileLoad(hash string) (fileModel *FileModel, err error) {
+func (s *dbStore) FileIsNotExistError(err error) bool {
+	return FileIsNotExistError(err)
+}
+
+func (s *dbStore) FileLoad(hash string) (fileModel *FileModel, err error) {
 	fileModel = &FileModel{}
-	err = is.db.Where(FileModel{Hash: hash}).First(fileModel).Error
+	err = s.db.Where(FileModel{Hash: hash}).First(fileModel).Error
+	if gorm.IsRecordNotFoundError(err) {
+		err = ErrFileNotExist
+	}
 	return
 }
 
-func (is *dbStore) FileCreate(fileModel *FileModel) error {
-	return is.db.Create(fileModel).Error
+func (s *dbStore) FileCreate(fileModel *FileModel) error {
+	return s.db.Create(fileModel).Error
 }
 
-func (is *dbStore) FileExist(hash string) (bool, error) {
+func (s *dbStore) FileExist(hash string) (bool, error) {
 	var count uint
-	err := is.db.Model(FileModel{}).Where(FileModel{Hash: hash}).Count(&count).Error
+	err := s.db.Model(FileModel{}).Where(FileModel{Hash: hash}).Count(&count).Error
 	return count > 0, err
 }
 

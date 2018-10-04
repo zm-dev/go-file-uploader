@@ -90,6 +90,10 @@ func (mu *minioUploader) PresignedGetObject(hashValue string, expires time.Durat
 	return mu.minioClient.PresignedGetObject(mu.bucketName, name, expires, reqParams)
 }
 
+func (mu *minioUploader) Store() Store {
+	return mu.s
+}
+
 func NewMinioUploader(h Hasher, minioClient *minio.Client, s Store, bucketName string, h2sn Hash2StorageName) Uploader {
 	if h2sn == nil {
 		h2sn = Hash2StorageNameFunc(DefaultHash2StorageNameFunc)
