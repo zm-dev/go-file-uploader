@@ -94,17 +94,21 @@ func (mu *minioUploader) Store() Store {
 	return mu.s
 }
 
-func (mu *minioUploader) GetFile(hashValue string) (ReadFile, error) {
+func (mu *minioUploader) ReadFile(hashValue string) (rf ReadFile, size int64, err error) {
 	name, err := mu.h2sn.Convent(hashValue)
 	if err != nil {
-		return nil, err
+		return
 	}
 	obj, err := mu.minioClient.GetObject(mu.bucketName, name, minio.GetObjectOptions{})
-
 	if err != nil {
-		return nil, err
+		return
 	}
-	return obj, nil
+	info, err := obj.Stat()
+	if err != nil {
+		return
+	}
+	size = info.Size
+	return
 }
 
 func NewMinioUploader(h Hasher, minioClient *minio.Client, s Store, bucketName string, h2sn Hash2StorageName) Uploader {

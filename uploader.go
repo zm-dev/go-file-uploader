@@ -17,7 +17,7 @@ type FileHeader struct {
 type Uploader interface {
 	Upload(fh FileHeader, extra string) (f *FileModel, err error)
 	PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error)
-	GetFile(hashValue string) (ReadFile, error)
+	ReadFile(hashValue string) (rf ReadFile, size int64, err error)
 	Store() Store
 }
 
