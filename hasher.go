@@ -8,17 +8,17 @@ import (
 	"errors"
 )
 
-type HashFunc func(file File) (string, error)
+type HashFunc func(file io.ReadSeeker) (string, error)
 
-func (hf HashFunc) Hash(file File) (string, error) {
+func (hf HashFunc) Hash(file io.ReadSeeker) (string, error) {
 	return hf(file)
 }
 
 type Hasher interface {
-	Hash(file File) (string, error)
+	Hash(file io.ReadSeeker) (string, error)
 }
 
-func MD5HashFunc(file File) (string, error) {
+func MD5HashFunc(file io.ReadSeeker) (string, error) {
 	_, err := file.Seek(0, io.SeekStart)
 	if err != nil {
 		return "", err
