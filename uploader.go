@@ -17,8 +17,16 @@ type FileHeader struct {
 type Uploader interface {
 	Upload(fh FileHeader, extra string) (f *FileModel, err error)
 	PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error)
-	ReadFile(hashValue string) (rf ReadFile, size int64, err error)
+	ReadFile(hashValue string) (rf ReadFile, err error)
 	Store() Store
+}
+
+type FileInfo struct {
+	ETag         string    `json:"etag"`
+	Key          string    `json:"name"`         // Name of the object
+	LastModified time.Time `json:"lastModified"` // Date and time the object was last modified.
+	Size         int64     `json:"size"`         // Size in bytes of the object.
+	ContentType  string    `json:"contentType"`  // A standard MIME type describing the format of the object data.
 }
 
 type ReadFile interface {
@@ -26,6 +34,7 @@ type ReadFile interface {
 	io.Closer
 	io.Seeker
 	io.ReaderAt
+	Stat() (*FileInfo, error)
 }
 
 func Upload(ctx context.Context, fh FileHeader, extra string) (f *FileModel, err error) {
