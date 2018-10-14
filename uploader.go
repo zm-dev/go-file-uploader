@@ -8,21 +8,24 @@ import (
 	"net/url"
 )
 
-type File interface {
-	io.Reader
-	io.Seeker
-}
-
 type FileHeader struct {
 	Filename string
 	Size     int64
-	File     File
+	File     io.ReadSeeker
 }
 
 type Uploader interface {
 	Upload(fh FileHeader, extra string) (f *FileModel, err error)
 	PresignedGetObject(hashValue string, expires time.Duration, reqParams url.Values) (u *url.URL, err error)
+	GetFile(hashValue string) (ReadFile, error)
 	Store() Store
+}
+
+type ReadFile interface {
+	io.Reader
+	io.Closer
+	io.Seeker
+	io.ReaderAt
 }
 
 func Upload(ctx context.Context, fh FileHeader, extra string) (f *FileModel, err error) {
