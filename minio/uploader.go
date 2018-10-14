@@ -104,8 +104,6 @@ func (rf *readFile) Stat() (*FileInfo, error) {
 		return nil, err
 	}
 	return &FileInfo{
-		ETag:         info.ETag,
-		Key:          info.Key,
 		LastModified: info.LastModified,
 		Size:         info.Size,
 		ContentType:  info.ContentType,

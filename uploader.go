@@ -22,8 +22,6 @@ type Uploader interface {
 }
 
 type FileInfo struct {
-	ETag         string    `json:"etag"`
-	Key          string    `json:"name"`         // Name of the object
 	LastModified time.Time `json:"lastModified"` // Date and time the object was last modified.
 	Size         int64     `json:"size"`         // Size in bytes of the object.
 	ContentType  string    `json:"contentType"`  // A standard MIME type describing the format of the object data.
